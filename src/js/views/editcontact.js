@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 import PhoneInput from 'react-phone-number-input';
-import 'react-phone-number-input/style.css';  // Importar el estilo CSS de la librería
+import 'react-phone-number-input/style.css';  
 
 export const EditContact = () => {
     const { store, actions } = useContext(Context);
@@ -13,7 +13,7 @@ export const EditContact = () => {
         name: "",
         email: "",
         address: "",
-        phone: "", // Este campo será para el número de teléfono
+        phone: "", 
     });
 
     useEffect(() => {
@@ -38,10 +38,15 @@ export const EditContact = () => {
         });
     };
 
+    
+  const handleCancel = () => {
+    navigate('/');
+  };
+
     const handleSubmit = async (event) => {
         event.preventDefault();
         await actions.editContact(id, formData);
-        navigate("/"); // Redirigir a la página principal después de guardar
+        navigate("/"); 
     };
 
     return (
@@ -82,7 +87,7 @@ export const EditContact = () => {
                     </label>
                     <PhoneInput
                         international
-                        defaultCountry="ES" // Puedes ajustar el país predeterminado aquí
+                        defaultCountry="ES"
                         value={formData.phone}
                         onChange={handlePhoneChange}
                         className="form-control"
@@ -101,9 +106,10 @@ export const EditContact = () => {
                         onChange={handleInputChange}
                     />
                 </div>
-                <div className="container d-flex col-12 justify-content-center input">
-                    <button type="submit" className="btn">Save Changes</button>
-                </div>
+                <div className="d-flex justify-content-center mt-3">
+                            <button type="submit" className="btn btn-primary" onClick={handleSubmit}>Save Changes</button>
+                            <button type="button" className="btn btn-secondary ms-2" onClick={handleCancel}>Cancel</button>
+                        </div>
             </form>
         </div>
     );

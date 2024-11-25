@@ -64,7 +64,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			  alert(`Hubo un problema al eliminar el contacto: ${error.message}`);
 			});
 		},
-  
+		
 		editContact: async (id, updatedData) => {
 			if (!id) {
 				throw new Error("ID is missing, cannot edit contact.");

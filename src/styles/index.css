@@ -1,3 +1,13 @@
 /* 
     General Styles
 */
+/* Estilo por defecto del ícono */
+.fa-user-minus {
+    color: #000; /* Color inicial, por ejemplo, negro */
+  }
+  
+  /* Estilo cuando el ratón pasa por encima (hover) */
+  .fa-user-minus:hover {
+    color: red; /* Cambia a rojo cuando el ratón pasa por encima */
+  }
+  

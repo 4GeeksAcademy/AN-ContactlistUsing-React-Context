@@ -3,7 +3,6 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import injectContext from "./store/appContext";
 
-import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 import { Home } from "./views/home";
 import { Addcontact } from "./views/addcontact";
@@ -18,7 +17,6 @@ const Layout = () => {
 	return (
 		<div>
 			<BrowserRouter basename={basename}>
-					<Navbar />
 					<Routes>
 						<Route path="/" element={<Home />} />
 						<Route path="/addcontact" element={<Addcontact />} />
