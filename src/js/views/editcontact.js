@@ -49,6 +49,8 @@ export const EditContact = () => {
         navigate("/"); 
     };
 
+    const isFormValid = formData.name && formData.email && formData.phone && formData.address;
+
     return (
         <div className="container new-contact">
             <form className="row g-3" onSubmit={handleSubmit}>
@@ -107,7 +109,14 @@ export const EditContact = () => {
                     />
                 </div>
                 <div className="d-flex justify-content-center mt-3">
-                            <button type="submit" className="btn btn-primary" onClick={handleSubmit}>Save Changes</button>
+                <button 
+                        type="submit" 
+                        className="btn btn-primary" 
+                        onClick={handleSubmit}
+                        disabled={!isFormValid} 
+                    >
+                    Update
+                </button>
                             <button type="button" className="btn btn-secondary ms-2" onClick={handleCancel}>Cancel</button>
                         </div>
             </form>
