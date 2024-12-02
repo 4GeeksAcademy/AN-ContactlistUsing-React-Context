@@ -64,6 +64,35 @@ const getState = ({ getStore, getActions, setStore }) => {
 			  alert(`Hubo un problema al eliminar el contacto: ${error.message}`);
 			});
 		},
+
+		// Eliminar todos los contactos
+		deleteAllContacts: () => { 
+			const contacts = getStore().contacts;
+			if (contacts.length === 0){
+				alert("No contactcs to delete.")
+				return;
+			}
+			const updatedContacts = []; //Vaciar la lista de contactos
+
+			setStore({ contacts: updatedContacts });
+
+			contacts.forEach((contact) => {
+				fetch(`https://playground.4geeks.com/contact/agendas/nico/contacts/${contact.id}`, {
+					method: "DELETE",
+					headers: { "Content-Type": "application/json" },
+				  })
+					.then((response) => {
+					  if (!response.ok) {
+						throw new Error(`Error al eliminar el contacto con id ${contact.id}.`);
+					  }
+					  console.log(`Contacto con id ${contact.id} eliminado del servidor`);
+					})
+					.catch((error) => {
+					  console.error(error);
+					  alert("Hubo un problema al eliminar los contactos.");
+					});
+			});
+		},
 		
 		editContact: async (id, updatedData) => {
 			if (!id) {

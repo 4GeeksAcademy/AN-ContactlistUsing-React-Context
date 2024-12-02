@@ -145,6 +145,17 @@ export const Addcontact = () => {
                             required
                         />
                     </div>
+                    <p onClick={() => navigate("/")} style={{
+                                cursor: 'pointer',
+                                color: '#007bff', 
+                                fontSize: '16px', 
+                                textDecoration: 'underline',
+                                marginLeft: '0', 
+                            }}
+                    >
+                        Volver a la lista de contactos
+                    </p>
+
                     <div className="container d-flex col-12 justify-content-center input">
                         {/* Botón de guardar con estilo */}
                         <button 

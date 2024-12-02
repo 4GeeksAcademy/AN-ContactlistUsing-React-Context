@@ -1,12 +1,15 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/index.css";
 import { ContactCard } from "../component/contactcard";
 import { Navbar } from "../component/navbar";
+import Swal from "sweetalert2";
 
 export const Home = () => {
 
   const { store, actions } = useContext(Context);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [deleted, setDeleted] = useState(false);
 
   useEffect(() => {
     actions.getAllContacts();
@@ -14,9 +17,25 @@ export const Home = () => {
 
   // Función para manejar el evento de eliminar todos los contactos
   const handleDeleteAllContacts = () => {
-    if (window.confirm("Are you sure you want to delete all contacts?")) {
-      actions.deleteAllContacts(); // Llamamos la acción para eliminar todos los contactos
-    }
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: "Esta acción eliminará todos los contactos.",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Sí, eliminar todos',
+    }).then((result)=>{
+      if(result.isConfirmed){
+        setIsDeleting(true);
+
+        setTimeout(()=>{
+         actions.deleteAllContacts();
+         setIsDeleting(false);
+         setDeleted(true); 
+        }, 2000);
+      }
+    })
   };
 
   return (
@@ -37,13 +56,23 @@ export const Home = () => {
               borderRadius: '5px',
               cursor: 'pointer',
               boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+              transition: 'all 0.3s ease', // Transición suave
             }}
+            disabled={isDeleting || store.contacts.length === 0 } // Desabilitaremos en caso que no haya contactos
           >
-            Delete All Contacts
+            {isDeleting?(
+              <span>Borrando...</span>
+            ) : deleted ? (
+              <span>No hay contactos</span>
+            ) : (
+              <span>{store.contacts.length === 0 ? 'No hay contactos que eliminar' : 'Eliminar todos los contactos'}</span>
+            )}
           </button>
         </div>
+        
         <div>
-          {store.contacts && store.contacts.map((contact) => {
+          {store.contacts && store.contacts.length > 0 ? ( 
+            store.contacts.map((contact) => {
             return (
               <ContactCard
                 name={contact.name}
@@ -54,7 +83,10 @@ export const Home = () => {
                 email={contact.email}
               />
             );
-          })}
+          })
+        ) : (
+          <p className="text-center mt-4">No hay contactos disponibles.</p>
+        )}
         </div>
       </div>
     </div>
